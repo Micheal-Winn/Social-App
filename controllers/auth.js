@@ -30,8 +30,8 @@ export const register = async(req,res)=>{
             friends,
             location,
             occupation,
-            viewProfile: Math.floor(random() * 10000),
-            impressions : Math.floor(random() * 10000)
+            viewProfile: Math.floor(Math.random() * 10000),
+            impressions : Math.floor(Math.random() * 10000),
         })
 
         const savedUser = await newUser.save();
@@ -51,9 +51,12 @@ export const login = async (req,res)=> {
         if(!user) return res.status(400).json({message : "User does not exists."});
 
         const isMatch = await bcrypt.compare(password,user.password);
-        if(!isMatch) return res.status(400).json({message : "Invalid credentials."});
+        if(!isMatch) 
+        {
+            return res.status(400).json({message : "Invalid credentials."})
+        };
 
-        const token = await jwt.sign({id: user._id }, process.env.JWT_SECRECT)
+        const token = jwt.sign({id: user._id }, process.env.JWT_SECRECT)
         delete user.password;//because returned user is containg password so i delete it but it has been still in database and doesn't get sent back to the frontend 
         res.status(200).json({token,user})
     } catch (err) {
