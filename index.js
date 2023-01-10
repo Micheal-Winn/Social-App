@@ -50,9 +50,9 @@ app.post("/auth/register",upload.single("picture"),register);//i want the upload
 app.post("/posts/create",verifyToken,upload.single("picture"),createPost);
 
 /*Routes */
-app.post("/auth",authRoutes);
-app.post("/users",userRoutes)// see other user account so users
-app.post("/posts",postRoutes)
+app.use("/auth",authRoutes);
+app.use("/users",userRoutes)// see other user account so users
+app.use("/posts",postRoutes)
 
 /*MONGOOSE SETUP */
 
