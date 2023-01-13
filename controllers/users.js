@@ -44,8 +44,8 @@ export const addRemoveFriend = async(req,res)=>{
         const friend = await User.findById(friendId);
 
         if(user.friends.includes(friendId)){
-            user.friends.filter((id)=> id != friendId);//this means my account(id) has this friend so remove this user (friendId)
-            friend.friends.filter((idFriend)=> idFriend != id)//Also i delete this user so these user must be remove my account(id)
+            user.friends = user.friends.filter((id)=> id !== friendId);//this means my account(id) has this friend so remove this user (friendId)
+            friend.friends = friend.friends.filter((idFriend)=> idFriend !== id)//Also i delete this user so these user must be remove my account(id)
         }else{
             user.friends.push(friendId);
             friend.friends.push(id)
